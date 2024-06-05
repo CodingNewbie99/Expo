@@ -2,6 +2,10 @@
 import type { ReactNode } from 'react';
 import type { TextProps, GestureResponderEvent } from 'react-native';
 
+export interface LinkToOptions {
+  unstable_ignoreAnchor?: boolean;
+}
+
 export namespace ExpoRouter {
   type StaticRoutes = string;
   type DynamicRoutes<T extends string> = string;
@@ -177,11 +181,11 @@ export namespace ExpoRouter {
     /** If there's history that supports invoking the `back` function. */
     canGoBack: () => boolean;
     /** Navigate to the provided href using a push operation if possible. */
-    push: (href: Href) => void;
+    push: (href: Href, options?: LinkToOptions) => void;
     /** Navigate to the provided href. */
-    navigate: (href: Href) => void;
+    navigate: (href: Href, options?: LinkToOptions) => void;
     /** Navigate to route without appending to the history. */
-    replace: (href: Href) => void;
+    replace: (href: Href, options?: LinkToOptions) => void;
     /** Navigate to a screen with a stack lower than the current screen. Using the provided count if possible, otherwise 1. */
     dismiss: (count?: number) => void;
     /** Navigate to first screen within the lowest stack. */
@@ -267,6 +271,9 @@ export namespace ExpoRouter {
 
     /** On web, this sets the HTML `class` directly. On native, this can be used with CSS interop tools like Nativewind. */
     className?: string;
+
+    /** Ignore the anchor if navigating to a new navigator. */
+    unstable_ignoreAnchor?: boolean;
 
     onPress?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent> | GestureResponderEvent) => void;
   }

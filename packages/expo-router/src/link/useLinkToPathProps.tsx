@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { GestureResponderEvent, Platform } from 'react-native';
 
+import { LinkToOptions } from '../../types/expo-router';
 import { appendBaseUrl } from '../fork/getPathFromState';
 import { useExpoRouter } from '../global-state/router-store';
 import { stripGroupSegmentsFromPath } from '../matchers';
@@ -29,7 +30,11 @@ function eventShouldPreventDefault(
   return false;
 }
 
-export default function useLinkToPathProps(props: { href: string; event?: string }) {
+export default function useLinkToPathProps(props: {
+  href: string;
+  event?: string;
+  options?: LinkToOptions;
+}) {
   const { linkTo } = useExpoRouter();
 
   const onPress = (e?: React.MouseEvent<HTMLAnchorElement, MouseEvent> | GestureResponderEvent) => {
@@ -43,7 +48,7 @@ export default function useLinkToPathProps(props: { href: string; event?: string
     }
 
     if (shouldHandle) {
-      linkTo(props.href, props.event);
+      linkTo(props.href, props.event, props.options);
     }
   };
 

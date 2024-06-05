@@ -39,6 +39,7 @@ export interface LinkComponent {
  * @param props.push Should push the current route, always adding to the history.
  * @param props.asChild Forward props to child component. Useful for custom buttons.
  * @param props.children Child elements to render the content.
+ * @param props.unstable_ignoreAnchor  Ignore the anchor if navigating to a new navigator .
  * @param props.className On web, this sets the HTML `class` directly. On native, this can be used with CSS interop tools like Nativewind.
  */
 export const Link = React.forwardRef(ExpoRouterLink) as unknown as LinkComponent;
@@ -101,6 +102,7 @@ function ExpoRouterLink(
     rel,
     target,
     download,
+    unstable_ignoreAnchor: ignoreAnchor,
     ...rest
   }: ExpoRouter.LinkProps,
   ref: React.ForwardedRef<Text>
@@ -122,7 +124,11 @@ function ExpoRouterLink(
   if (push) event = 'PUSH';
   if (replace) event = 'REPLACE';
 
-  const props = useLinkToPathProps({ href: resolvedHref, event });
+  const props = useLinkToPathProps({
+    href: resolvedHref,
+    event,
+    options: { unstable_ignoreAnchor: ignoreAnchor },
+  });
 
   const onPress = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent> | GestureResponderEvent) => {
     if ('onPress' in rest) {

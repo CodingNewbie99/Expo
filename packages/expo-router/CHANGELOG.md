@@ -6,6 +6,8 @@
 
 ### 🎉 New features
 
+- Add option to navigate to a route as a non-initial screen ([#28644](https://github.com/expo/expo/pull/28644) by [@marklawlor](https://github.com/marklawlor))
+
 ### 🐛 Bug fixes
 
 ### 💡 Others
